@@ -1,0 +1,73 @@
+<h2>Reactive: <small>Dinámicos</small></h2>
+<hr>
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+<!-- Nombre -->
+  <div class="mb-3 row">
+    <label clase="col-sm-3 col-form-label">Nombre</label>
+    <div class="col-sm-12">
+      <input class="form-control"
+      formControlName="nombre"
+      placeholder="Nombre de la persona"
+      >
+      <span class="form-text text-danger"
+      *ngIf="pathIsValid('nombre')">Este campo es obligatorio</span>
+    </div>
+  </div>
+
+  <!-- Agregar -->
+  <div class="mb-3 row">
+    <label clase="col-sm-3 col-form-label">Agregar</label>
+    <div class="col-sm-12">
+      <div class="input-group">
+        <input class="form-control"
+        [formControl]="nuevoJuego"
+        (keyup.enter)="agregarJuego()"
+        placeholder="Agregar Favorito">
+
+        <button class="btn btn-outline-primary"
+                type="button" (click)="agregarJuego()"> Agregar</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Listado -->
+  <div class="mb-3 row">
+    <label clase="col-sm-3 col-form-label">Favoritos</label>
+    <div class="col-sm-12" formArrayName="juego">
+      <div class="input-group mb-1"
+      *ngFor="let juego of juegoArr.controls; let i = index"
+      >
+        <input class="form-control"
+        [formControlName]="i"
+        >
+        <button class="btn btn-outline-danger"
+        type="button" (click)="eliminar()"> Eliminar</button>
+<!--se puede eliminar enviando en indice i en la función-->
+      </div>
+
+      </div>
+  </div>
+
+
+  <div class="mb-3 row">
+     <div class="col-sm-12">
+     <button type="submit"
+            class="btn btn-primary float-end "
+            (click)="guardar()">Guardar</button>
+    </div>
+  </div>
+</form>
+
+<span>Valid</span>
+<pre>{{miFormulario.valid}}</pre>
+<br>
+
+<span>Valid</span>
+<pre>{{miFormulario.value | json}}</pre>
+
+<span>Agregar</span>
+<pre>{{nuevoJuego.valid}}</pre>
+<br>
+
+<<span>Agregar juego</span>
+<pre>{{nuevoJuego.value | json}}</pre>
